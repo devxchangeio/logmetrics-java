@@ -1,28 +1,16 @@
 language: java
-
-jdk:
-  - oraclejdk9
-
-os:
-  - linux
-
-branches:
-  only:
-    - master
-
+os: linux
+dist: trusty
+jdk: oraclejdk9
+script: "./gradlew build  --stacktrace"
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+  - rm -fr $HOME/.gradle/caches/*/scripts/
 cache:
   directories:
-    - $HOME/.gradle
-
-before_script:
-  - git fetch
-  - git checkout -b gh-pages
-  - git merge origin/master
-
-script:
-  - gralde wrapper
-  - gradle assemble
-
+    - "$HOME/.gradle/caches/"
+    - "$HOME/.gradle/wrapper/"
 after_script:
   - git add .
   # something@example.com
