@@ -65,10 +65,9 @@ artifacts {
     archives javadocJar, sourcesJar
 }
 
-wrapper {
-	gradleVersion = '4.9'
+task wrapper(type: Wrapper) {
+	gradleVersion = '3.3'
 }
-
 
 publishing {
 	publications {
