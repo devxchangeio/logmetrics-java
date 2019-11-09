@@ -65,10 +65,6 @@ artifacts {
     archives javadocJar, sourcesJar
 }
 
-task wrapper(type: Wrapper) {
-	gradleVersion = '3.3'
-}
-
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
