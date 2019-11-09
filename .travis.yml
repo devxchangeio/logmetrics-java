@@ -14,18 +14,14 @@ cache:
   directories:
     - $HOME/.gradle
 
-before_install:
-  - chmod +x gradlew
-
 before_script:
   - git fetch
   - git checkout -b gh-pages
   - git merge origin/master
 
 script:
-  #- ./gradlew clean build
-  - ./gralde wrapper
-  - ./gradle assemble
+  - gralde wrapper
+  - gradle assemble
 
 after_script:
   - git add .
