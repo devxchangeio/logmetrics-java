@@ -5,7 +5,7 @@ jdk:
 
 install: echo "skip 'gradle assemble' step"
 script:
-  - ./gradlew clean build --stacktrace
+  - gradle clean build --stacktrace
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
