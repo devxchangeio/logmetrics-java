@@ -23,7 +23,9 @@ before_script:
   - git merge origin/master
 
 script:
-  - ./gradlew clean build
+  #- ./gradlew clean build
+  - ./gralde wrapper
+  - ./gradle assemble
 
 after_script:
   - git add .
