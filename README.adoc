@@ -1,4 +1,4 @@
-image::https://travis-ci.org/ksadayamuthu/logmetrics.svg?branch=master[Build Status]
+image:https://travis-ci.com/devxchangeio/logmetrics-java.svg?branch=master["Build Status", link="https://travis-ci.com/devxchangeio/logmetrics-java"]
 
 ## logmetrics
 
