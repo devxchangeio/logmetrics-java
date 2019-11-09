@@ -19,8 +19,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'maven'
-
-
+apply plugin: 'jacoco'
 
 group 'io.devxchange'
 version '0.0.2-SNAPSHOT'
@@ -37,7 +36,6 @@ repositories {
 
 
 dependencies {
-
 	compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.2.RELEASE'
     compile("javax.servlet:javax.servlet-api:3.1.0")
 	compile group: 'commons-io', name: 'commons-io', version: '2.4'
@@ -59,6 +57,25 @@ task javadocJar(type: Jar) {
 task sourcesJar(type: Jar) {
     classifier = 'sources'
     from sourceSets.main.allSource
+}
+
+task codeCoverageReport(type: JacocoReport) {
+	executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+	subprojects.each {
+		sourceSets it.sourceSets.main
+	}
+
+	reports {
+		xml.enabled true
+		xml.destination "${buildDir}/reports/jacoco/report.xml"
+		html.enabled false
+		csv.enabled false
+	}
+}
+
+codeCoverageReport.dependsOn {
+	subprojects*.test
 }
 
 artifacts {

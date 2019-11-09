@@ -1,4 +1,6 @@
 image:https://travis-ci.com/devxchangeio/logmetrics-java.svg?branch=master["Build Status", link="https://travis-ci.com/devxchangeio/logmetrics-java"]
+image:https://coveralls.io/repos/github/devxchangeio/logmetrics-java/badge.svg?branch=master["Coverage Status",link="https://coveralls.io/github/devxchangeio/logmetrics-java?branch=master"]
+
 
 ## logmetrics
 
