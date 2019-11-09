@@ -1,0 +1,75 @@
+image::https://travis-ci.org/ksadayamuthu/logmetrics.svg?branch=master[Build Status]
+
+## logmetrics
+
+Logmetrics framework provides simplified configuration to log payload for spring project.
+
+## Maven Repo 
+```
+maven { url "https://oss.sonatype.org/content/groups/public"}
+
+```
+
+## Dependencies
+
+```
+compile ("io.devxchange:logmetrics:0.0.2-SNAPSHOT")
+	
+```
+
+## Usage
+
+### Enable logmetrics - Add below property to your application.properties file
+
+```
+logmetrics.logging.enabled=true
+logmetrics.logging.request.enabled=true
+logmetrics.logging.response.enabled=true
+
+```
+
+### Injecting the LogWriterManager & adding Interceptors
+
+```
+@Configuration
+@EnableWebMvc
+public class AppConfig extends WebMvcConfigurerAdapter 
+{
+	@Autowired
+	@Qualifier("manager.logwriter")
+	private LogWriterManager logWriterManager;
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) 
+	{
+		registry.addInterceptor(new RestTransactionInterceptor(logWriterManager));
+	}
+}
+	
+```
+
+### Demo Project 
+
+https://github.com/oneclicklabs-devxchange/loging-demo.git[logging-demo]
+
+## Release History
+
+** 0.0.2-SNAPSHOT
+    * adding feature to enable/disable payload logging
+    
+** 0.0.1-SNAPSHOT
+    * logging rest verb & payload to console.
+
+## Meta
+Karthikeyan Sadayamuthu – https://www.linkedin.com/in/karthy86/[LinkedIn]
+
+Distributed under the Apache License. See ``LICENSE`` for more information. https://github.com/devxchange/logmetrics-java/blob/master/LICENSE[license]
+
+## Contributing
+
+1. Fork it!
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request :D
+
