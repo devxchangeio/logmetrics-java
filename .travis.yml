@@ -1,36 +1,10 @@
 language: java
-
 jdk:
-  - oraclejdk8
-  -
-dist: xenial
-os:
-  - linux
+  - oraclejdk9
 
-branches:
-  only:
-    - master
-
-cache:
-  directories:
-    - $HOME/.gradle
-
-before_install:
-  - chmod +x gradlew
-
-before_script:
-  - git fetch
-  - git checkout -b gh-pages
-  - git merge origin/master
-
+install: echo "skip 'gradle assemble' step"
 script:
-  - ./gradlew clean build
+  - ./gradlew clean build --stacktrace
 
-after_script:
-  - git add .
-  # something@example.com
-  - git config user.email "${GIT_EMAIL}"
-  # First Last
-  - git config user.name "${GIT_NAME}"
-  - git commit -m "updating outputs"
-  - git push -f "${GIT_URL}" gh-pages > /dev/null 2>&1
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
