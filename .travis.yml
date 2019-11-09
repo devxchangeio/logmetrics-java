@@ -1,18 +1,30 @@
-sudo : required
 language: java
+
 jdk:
-  - openjdk8
-script: ./gradlew build gitPublishPush  --stacktrace
-before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-  - rm -fr $HOME/.gradle/caches/*/scripts/
-before_install:
-  - chmod +x gradlew
+  - oraclejdk8
+
+os:
+  - linux
+
+branches:
+  only:
+    - master
+
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+    - $HOME/.gradle
+
+before_install:
+  - chmod +x gradlew
+
+before_script:
+  - git fetch
+  - git checkout -b gh-pages
+  - git merge origin/master
+
+script:
+  - ./gradlew clean build
+
 after_script:
   - git add .
   # something@example.com
