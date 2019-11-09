@@ -1,0 +1,35 @@
+language: java
+
+jdk:
+  - oraclejdk8
+
+os:
+  - linux
+
+branches:
+  only:
+    - master
+
+cache:
+  directories:
+    - $HOME/.gradle
+
+before_install:
+  - chmod +x gradlew
+
+before_script:
+  - git fetch
+  - git checkout -b gh-pages
+  - git merge origin/master
+
+script:
+  - ./gradlew clean build
+
+after_script:
+  - git add .
+  # something@example.com
+  - git config user.email "${GIT_EMAIL}"
+  # First Last
+  - git config user.name "${GIT_NAME}"
+  - git commit -m "updating outputs"
+  - git push -f "${GIT_URL}" gh-pages > /dev/null 2>&1
