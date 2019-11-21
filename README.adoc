@@ -1,5 +1,4 @@
 image:https://travis-ci.com/devxchangeio/logmetrics-java.svg?branch=master["Build Status", link="https://travis-ci.com/devxchangeio/logmetrics-java"]
-image:https://api.bintray.com/packages/devxchange/logmetrics/logmetrics-java/images/download.svg?version=0.0.2-SNAPSHOT[link="https://bintray.com/devxchange/logmetrics/logmetrics-java/0.0.2-SNAPSHOT/link"]
 
 ## logmetrics
 
@@ -14,7 +13,7 @@ maven { url "https://oss.sonatype.org/content/groups/public"}
 ## Dependencies
 
 ```
-compile ("io.devxchange:logmetrics:0.0.2-SNAPSHOT")
+compile ("io.devxchange:logmetrics:1.0.0-SNAPSHOT")
 	
 ```
 
@@ -55,14 +54,12 @@ https://github.com/oneclicklabs-devxchange/loging-demo.git[logging-demo]
 
 ## Release History
 
-** 0.0.2-SNAPSHOT
-    * adding feature to enable/disable payload logging
-    
-** 0.0.1-SNAPSHOT
+** 1.0.0-SNAPSHOT
     * logging rest verb & payload to console.
+    * feature to enable/disable payload logging
 
 ## Meta
-Karthikeyan Sadayamuthu – https://www.linkedin.com/in/karthy86/[LinkedIn]
+Karthikeyan Sadayamuthu – https://www.linkedin.com/in/ksadayamuthu/[LinkedIn]
 
 Distributed under the Apache License. See ``LICENSE`` for more information. https://github.com/devxchange/logmetrics-java/blob/master/LICENSE[license]
 
