@@ -7,8 +7,9 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.1'
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:3.1.1"
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4"
     }
 }
 
@@ -16,15 +17,12 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'maven'
+apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'com.jfrog.bintray'
 
 
 group 'io.devxchange'
-version '1.0.0'
-archivesBaseName = "logmetrics"
-
-
-sourceCompatibility = 1.8
+version '1.0.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -32,8 +30,8 @@ repositories {
     maven { url "https://repo.spring.io/milestone" }
 }
 
-
 dependencies {
+    compile gradleApi()
     compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.2.RELEASE'
     compile("javax.servlet:javax.servlet-api:3.1.0")
     compile group: 'commons-io', name: 'commons-io', version: '2.4'
@@ -44,53 +42,64 @@ dependencies {
     compile group: 'commons-collections', name: 'commons-collections', version: '3.0'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.8.4'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.4'
-
 }
 
-// custom tasks for creating source/javadoc jars
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
+def javaApiUrl = 'http://docs.oracle.com/javase/1.7.0/docs/api/'
+tasks.withType(Javadoc) {
+    options.links(javaApiUrl)
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
-    from javadoc.destinationDir
+    from 'build/docs/javadoc'
 }
 
-artifacts {
-    archives sourcesJar, javadocJar
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            id "sadayamuthu"
+            name "Karthikeyan Sadayamuthu"
+            email "ksadayamuthu@outlook.com"
+        }
+    }
 }
 
 publishing {
     publications {
-        MyPublication(MavenPublication) {
+        mavenJava(MavenPublication) {
             from components.java
-            groupId 'io.devxchange'
-            artifactId 'logmetrics'
-            version '1.0.0'
+            artifact sourcesJar
+            artifact javadocJar
+
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'LogMetrics for Java Projects')
+                root.children().last() + pomConfig
+            }
         }
     }
 }
 
 bintray {
-    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-    publications = ['MyPublicaiton']
-    dryRun = false
-    publish = true
+    user = project.hasProperty('bintrayUser') ? project.bintrayUser : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayKey') ? project.bintrayKey : System.getenv('BINTRAY_KEY')
+    publications = ['mavenJava']
     pkg {
-        repo = 'logmetrics'
-        name = 'logmetrics-java'
+        repo = 'maven-repo'
         userOrg = 'devxchange'
+        name = 'logmetrics'
         licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/devxchangeio/logmetrics-java.git'
-        labels = ['devxchangeio', 'logmetrics']
-        publicDownloadNumbers = true
-        attributes= ['a': ['ay1', 'ay2'], 'b': ['bee'], c: 'cee'] //Optional package-level attributes
-        version {
-            name = '1.0.0-Final'
-            desc = 'LogMetrics for Java Projects 1.0 final'
-        }
     }
 }
