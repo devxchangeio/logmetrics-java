@@ -6,7 +6,7 @@ Logmetrics framework provides simplified configuration to log payload for spring
 
 ## Maven Repo 
 ```
-maven { url "https://oss.sonatype.org/content/groups/public"}
+maven { url "https://devxchange.bintray.com/maven-repo/"}
 
 ```
 
@@ -50,7 +50,7 @@ public class AppConfig extends WebMvcConfigurerAdapter
 
 ### Demo Project 
 
-https://github.com/oneclicklabs-devxchange/loging-demo.git[logging-demo]
+https://github.com/devxchange-blog/logmetrics-demo.git[logmetrics-demo]
 
 ## Release History
 
