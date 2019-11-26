@@ -54,7 +54,7 @@ https://github.com/devxchange-blog/logmetrics-demo.git[logmetrics-demo]
 
 ## Release History
 
-** 1.0.0-SNAPSHOT
+** 0.0.1
     * logging rest verb & payload to console.
     * feature to enable/disable payload logging
 
