@@ -22,7 +22,7 @@ apply plugin: 'com.jfrog.bintray'
 
 
 group 'io.devxchange'
-version '1.0.0-SNAPSHOT'
+version '0.0.1'
 
 repositories {
     mavenCentral()
@@ -97,8 +97,9 @@ bintray {
     key = project.hasProperty('bintrayKey') ? project.bintrayKey : System.getenv('BINTRAY_KEY')
     publications = ['mavenJava']
     pkg {
-        repo = 'maven-repo'
-        userOrg = 'devxchange'
+        vcsUrl = 'https://github.com/devxchangeio/obfuscator-java.git'
+        repo = 'release'
+        userOrg = 'm2'
         name = 'logmetrics'
         licenses = ['Apache-2.0']
     }

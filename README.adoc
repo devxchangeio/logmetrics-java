@@ -6,14 +6,14 @@ Logmetrics framework provides simplified configuration to log payload for spring
 
 ## Maven Repo 
 ```
-maven { url "https://devxchange.bintray.com/maven-repo/"}
+maven { url "https://dl.bintray.com/m2/release"}
 
 ```
 
 ## Dependencies
 
 ```
-compile ("io.devxchange:logmetrics:1.0.0-SNAPSHOT")
+compile ("io.devxchange:logmetrics:0.0.1")
 	
 ```
 
