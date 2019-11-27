@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * Created by devxchange.io on 2/10/17.
  */
-public class PayloadMessageBuilder {
+public class LogMetricsBuilder {
 	private String message_type;
 	private Long duration;
 	private String host;
@@ -29,10 +29,10 @@ public class PayloadMessageBuilder {
 	private String httpMethod;
 	private String query;
 
-	private static final String MESSAGE_TYPE = "PAYLOAD_MESSAGE";
+	private static final String MESSAGE_TYPE = "LOGMETRICS_MESSAGE";
 
-	public PayloadMessageBuilder(final String host, final String node, final String system,
-			final String serviceOperation, final String httpMethod, final long duration) {
+	public LogMetricsBuilder(final String host, final String node, final String system,
+							 final String serviceOperation, final String httpMethod, final long duration) {
 		this.message_type(MESSAGE_TYPE);
 		this.host(host);
 		this.node(node);
@@ -50,12 +50,12 @@ public class PayloadMessageBuilder {
 		return responseBody;
 	}
 
-	public PayloadMessageBuilder requestBody(String requestBody) {
+	public LogMetricsBuilder requestBody(String requestBody) {
 		this.requestBody = requestBody;
 		return this;
 	}
 
-	public PayloadMessageBuilder responseBody(String responseBody) {
+	public LogMetricsBuilder responseBody(String responseBody) {
 		this.responseBody = responseBody;
 		return this;
 	}
@@ -64,7 +64,7 @@ public class PayloadMessageBuilder {
 		return applicationName;
 	}
 
-	public PayloadMessageBuilder applicationName(String applicationName) {
+	public LogMetricsBuilder applicationName(String applicationName) {
 		this.applicationName = applicationName;
 		return this;
 	}
@@ -73,12 +73,12 @@ public class PayloadMessageBuilder {
 		return message_type;
 	}
 
-	public PayloadMessageBuilder message_type(String message_type) {
+	public LogMetricsBuilder message_type(String message_type) {
 		this.message_type = message_type;
 		return this;
 	}
 
-	public PayloadMessageBuilder aspects(Map<String, String> aspects) {
+	public LogMetricsBuilder aspects(Map<String, String> aspects) {
 		this.aspects = aspects;
 		return this;
 	}
@@ -91,7 +91,7 @@ public class PayloadMessageBuilder {
 		return duration;
 	}
 
-	public PayloadMessageBuilder duration(Long duration) {
+	public LogMetricsBuilder duration(Long duration) {
 		this.duration = duration;
 		return this;
 	}
@@ -100,7 +100,7 @@ public class PayloadMessageBuilder {
 		return host;
 	}
 
-	public PayloadMessageBuilder host(String host) {
+	public LogMetricsBuilder host(String host) {
 		this.host = host;
 		return this;
 	}
@@ -109,7 +109,7 @@ public class PayloadMessageBuilder {
 		return level;
 	}
 
-	public PayloadMessageBuilder level(String level) {
+	public LogMetricsBuilder level(String level) {
 		this.level = level;
 		return this;
 	}
@@ -118,7 +118,7 @@ public class PayloadMessageBuilder {
 		return method;
 	}
 
-	public PayloadMessageBuilder method(String method) {
+	public LogMetricsBuilder method(String method) {
 		this.method = method;
 		return this;
 	}
@@ -127,7 +127,7 @@ public class PayloadMessageBuilder {
 		return node;
 	}
 
-	public PayloadMessageBuilder node(String node) {
+	public LogMetricsBuilder node(String node) {
 		this.node = node;
 		return this;
 	}
@@ -136,7 +136,7 @@ public class PayloadMessageBuilder {
 		return service;
 	}
 
-	public PayloadMessageBuilder service(String service) {
+	public LogMetricsBuilder service(String service) {
 		this.service = service;
 		return this;
 	}
@@ -145,7 +145,7 @@ public class PayloadMessageBuilder {
 		return system;
 	}
 
-	public PayloadMessageBuilder system(String system) {
+	public LogMetricsBuilder system(String system) {
 		this.system = system;
 		return this;
 	}
@@ -154,7 +154,7 @@ public class PayloadMessageBuilder {
 		return serviceVersion;
 	}
 
-	public PayloadMessageBuilder serviceVersion(String serviceVersion) {
+	public LogMetricsBuilder serviceVersion(String serviceVersion) {
 		this.serviceVersion = serviceVersion;
 		return this;
 	}
@@ -163,7 +163,7 @@ public class PayloadMessageBuilder {
 		return startDateTime;
 	}
 
-	public PayloadMessageBuilder startDateTime(Date startDateTime) {
+	public LogMetricsBuilder startDateTime(Date startDateTime) {
 		this.startDateTime = startDateTime;
 		return this;
 	}
@@ -172,7 +172,7 @@ public class PayloadMessageBuilder {
 		return endDateTime;
 	}
 
-	public PayloadMessageBuilder endDateTime(Date endDateTime) {
+	public LogMetricsBuilder endDateTime(Date endDateTime) {
 		this.endDateTime = endDateTime;
 		return this;
 	}
@@ -181,12 +181,12 @@ public class PayloadMessageBuilder {
 		return error;
 	}
 
-	public PayloadMessageBuilder error(Boolean error) {
+	public LogMetricsBuilder error(Boolean error) {
 		this.error = error;
 		return this;
 	}
 
-	public PayloadMessageBuilder contentType(String contentType) {
+	public LogMetricsBuilder contentType(String contentType) {
 		this.contentType = contentType;
 		return this;
 	}
@@ -195,7 +195,7 @@ public class PayloadMessageBuilder {
 		return errorCode;
 	}
 
-	public PayloadMessageBuilder errorCode(String errorCode) {
+	public LogMetricsBuilder errorCode(String errorCode) {
 		this.errorCode = errorCode;
 		return this;
 	}
@@ -204,7 +204,7 @@ public class PayloadMessageBuilder {
 		return errorMessage;
 	}
 
-	public PayloadMessageBuilder errorMessage(String errorMessage) {
+	public LogMetricsBuilder errorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 		return this;
 	}
@@ -213,8 +213,8 @@ public class PayloadMessageBuilder {
 		return MESSAGE_TYPE;
 	}
 
-	public PayloadMessage createTransactionMessage() {
-		return new PayloadMessage(message_type, duration, host, level, method, node, service, system, serviceVersion,
+	public LogMetrics createTransactionMessage() {
+		return new LogMetrics(message_type, duration, host, level, method, node, service, system, serviceVersion,
 				startDateTime, endDateTime, error, errorCode, errorMessage, aspects, requestBody, responseBody,
 				applicationName, httpMethod, query, contentType);
 	}
@@ -223,7 +223,7 @@ public class PayloadMessageBuilder {
 		return httpMethod;
 	}
 
-	public PayloadMessageBuilder httpMethod(String httpMethod) {
+	public LogMetricsBuilder httpMethod(String httpMethod) {
 		this.httpMethod = httpMethod;
 		return this;
 	}
@@ -232,12 +232,12 @@ public class PayloadMessageBuilder {
 		return query;
 	}
 
-	public PayloadMessageBuilder query(String query) {
+	public LogMetricsBuilder query(String query) {
 		this.query = query;
 		return this;
 	}
 
-	public PayloadMessageBuilder populateWithError(String code, String message) {
+	public LogMetricsBuilder populateWithError(String code, String message) {
 		return this.error(true).errorCode(code).errorMessage(message);
 	}
 

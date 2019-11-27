@@ -14,7 +14,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import io.devxchange.logmetrics.types.PayloadMessage;
+import io.devxchange.logmetrics.types.LogMetrics;
 
 /**
  * Created by devxchange.io on 2/10/17.
@@ -42,7 +42,7 @@ public class LogWriterManager {
 		return Collections.unmodifiableList(this.writerList);
 	}
 
-	public void writeTransactionlog(PayloadMessage transactionMessage) {
+	public void writeTransactionlog(LogMetrics transactionMessage) {
 		this.stream().filter(writer -> writer.isEnabled())
 				.forEach(writer -> writer.writeTransactionlog(transactionMessage));
 	}

@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -19,7 +18,7 @@ import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import io.devxchange.logmetrics.types.PayloadMessageBuilder;
+import io.devxchange.logmetrics.types.LogMetricsBuilder;
 import io.devxchange.logmetrics.util.LogUtil;
 import io.devxchange.logmetrics.writer.LogWriterManager;
 
@@ -27,20 +26,14 @@ import io.devxchange.logmetrics.writer.LogWriterManager;
  * Created by devxchange.io on 2/10/17.
  */
 @Component
-public class RestPayloadInterceptor extends HandlerInterceptorAdapter {
+public class FrontendRestInterceptor extends HandlerInterceptorAdapter {
 
-	Logger log = LoggerFactory.getLogger(RestPayloadInterceptor.class);
+	Logger log = LoggerFactory.getLogger(FrontendRestInterceptor.class);
 
 	private LogWriterManager logWriter;
 
-	@Value("${io.oneclicklabs.logging.request.obfuscated.fields}")
-	private String[] requestObfuscation;
-
-	@Value("${io.oneclicklabs.logging.response.obfuscated.fields}")
-	private String[] responseObfuscation;
-
 	@Autowired
-	public RestPayloadInterceptor(@Qualifier("manager.logwriter") LogWriterManager logWriter) {
+	public FrontendRestInterceptor(@Qualifier("manager.logwriter") LogWriterManager logWriter) {
 
 		this.logWriter = logWriter;
 	}
@@ -77,7 +70,7 @@ public class RestPayloadInterceptor extends HandlerInterceptorAdapter {
 		Date endDateTime = new Date((Long) servletRequest.getAttribute("ENDTIME"));
 		long duration = ((Long) servletRequest.getAttribute("ENDTIME")
 				- (Long) servletRequest.getAttribute("STARTTIME"));
-		PayloadMessageBuilder messageBuilder = new PayloadMessageBuilder(hostname, node, null, getServiceOperation(),
+		LogMetricsBuilder messageBuilder = new LogMetricsBuilder(hostname, node, null, getServiceOperation(),
 				servletRequest.getMethod(), duration);
 		messageBuilder.aspects(null).query(servletRequest.getQueryString()).startDateTime(startDateTime)
 				.endDateTime(endDateTime).requestBody(requestPayload).contentType(servletRequest.getContentType())

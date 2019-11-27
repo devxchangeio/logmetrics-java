@@ -3,20 +3,23 @@ package io.devxchange.logmetrics.types;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.google.gson.GsonBuilder;
+import io.devxchange.logmetrics.util.Validation;
+import io.devxchange.obfuscator.Obfuscator;
 
 /**
  * Created by devxchange.io on 2/10/17.
  */
-public class PayloadMessage {
+public class LogMetrics {
 
 	public enum params {
 		messageType("message_type"), duration("Duration"), host("Host"), level("Level"), method("Method"), node(
 				"Node"), service("Service"), system("System"), serviceVersion("ServiceVersion"), startDateTime(
 						"StartDateTime"), endDateTime("EndDateTime"), error("Fault"), errorCode(
 								"FaultCode"), errorMessage(
-										"FaultString"), aspects("Aspects"), requestBody("RequestBody"), responseBody(
+				"FaultString"), aspects("Aspects"), requestBody("RequestBody"), responseBody(
 												"ResponseBody"), applicationName("ApplicationName"), httpMethod(
 														"HttpMethod"), query("Query"), contentType("ContentType");
 
@@ -53,12 +56,12 @@ public class PayloadMessage {
 	private final String query;
 	private final String contentType;
 
-	public PayloadMessage(String message_type, Long duration, String host, String level, String method, String node,
-			String service, String system,
+	public LogMetrics(String message_type, Long duration, String host, String level, String method, String node,
+					  String service, String system,
 
-			String serviceVersion, Date startDateTime, Date endDateTime, Boolean error, String errorCode,
-			String errorMessage, Map<String, String> aspects, String requestBody, String responseBody,
-			String applicationName, String httpMethod, String query, String contentType) {
+					  String serviceVersion, Date startDateTime, Date endDateTime, Boolean error, String errorCode,
+					  String errorMessage, Map<String, String> aspects, String requestBody, String responseBody,
+					  String applicationName, String httpMethod, String query, String contentType) {
 		this.message_type = message_type;
 		this.duration = duration;
 		this.host = host;
@@ -116,6 +119,31 @@ public class PayloadMessage {
 			map.remove(params.requestBody.keyName);
 		if (!includeResp)
 			map.remove(params.responseBody.keyName);
+		return this.toJson(map);
+	}
+
+	public String toJson(boolean includeReq, boolean includeResp, boolean obfuscate, Map<String, Set<String>> fields) {
+		Map<String, Object> originalMap = this.toMap();
+		HashMap<String, Object> map = new HashMap<>();
+		map.putAll(originalMap);
+		if (!includeReq) {
+			map.remove(params.requestBody.keyName);
+		}else if(obfuscate){
+			String payload = (String) originalMap.get(params.requestBody.keyName);
+			if(payload!=null && Validation.isJson(payload))
+				map.put(params.requestBody.keyName,Obfuscator.obfuscateJsonString(payload,fields));
+			else if(payload!=null)
+				map.put(params.requestBody.keyName, Obfuscator.obfuscateXmlString(payload, fields));
+		}
+		if (!includeResp)
+			map.remove(params.responseBody.keyName);
+		else if(obfuscate){
+			String payload = (String) originalMap.get(params.responseBody.keyName);
+			if(payload!=null && Validation.isJson(payload))
+				map.put(params.responseBody.keyName,Obfuscator.obfuscateJsonString(payload,fields));
+			else if(payload!=null)
+				map.put(params.responseBody.keyName, Obfuscator.obfuscateXmlString(payload, fields));
+		}
 		return this.toJson(map);
 	}
 
